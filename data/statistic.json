@@ -1,0 +1,22 @@
+{
+  "Python": 9,
+  "Docker": 4,
+  "SQL": 4,
+  "pytest": 2,
+  "FastAPI": 2,
+  "GraphQL": 2,
+  "Postman": 2,
+  "Linux": 1,
+  "SOLID": 1,
+  "requests": 1,
+  "Django": 1,
+  "CI/CD": 1,
+  "PostgreSQL": 1,
+  "Redis": 1,
+  "Elasticsearch": 1,
+  "Kubernetes": 1,
+  "Git": 1,
+  "REST": 1,
+  "HTTP": 1,
+  "Auth": 1
+}
