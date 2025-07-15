@@ -58,7 +58,9 @@ def get_vacancies_habr(job : str,vacancies : list[Vacancy]):
                         company = companyName[index].text,
                         location = locationJob[index].text,
                         url=f"{urls}/{name["href"][name["href"].rfind("/")+1:]}",
-                        description=''
+                        description='',
+                        skills = [],
+                        compatibility = 0
                     )
                 )
     else:

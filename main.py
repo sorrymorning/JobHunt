@@ -16,7 +16,6 @@ def clearTempFiles():
             file.unlink()  
             print(f"Удалён файл: {file.name}")
 
-
 def countSkills():
     vac = load_vacancies()
     for vacancy in [x for x in vac if x.site=="hh"]:
@@ -28,9 +27,12 @@ def countSkills():
     folder_path = Path("sources/tempFiles")
     all_skills = []
     if folder_path.exists() and folder_path.is_dir():
-        for file_path in folder_path.glob("*.txt"):
+        for vacancy in vac:
+            file_path = folder_path / (vacancy.id + vacancy.site + ".txt") 
+
             with open(file_path, "r", encoding="utf-8") as f:
                 skills = extract_skills("".join(f.readlines()),TECH_KEYWORDS)
+                vacancy.skills = skills
                 all_skills.extend(skills)
     else:
         print("Папка tempFiles не существует!")
@@ -41,12 +43,27 @@ def countSkills():
         print(f"{skill}: {count}")
         dict[skill] = count
     
+    save_vacancies(vac)
     clearTempFiles()
     with open("data/statistic.json","w") as f:
         json.dump(dict,f,ensure_ascii=False, indent=2)
 
+def jaccard_similarity(set1, set2):
+    set1,set2 = set(set1),set(set2)
+    intersection = len(set1 & set2)
+    union = len(set1 | set2)
+    return intersection / union if union else 0
 
 
+def get_best_vacancy(user_skills):
+    vac = load_vacancies()
+
+
+    for vacancy in vac:
+        score = jaccard_similarity(user_skills,vacancy.skills)
+        print(f"{vacancy.title}: совпадение {score:.2f}")
+        vacancy.compatibility = score
+    save_vacancies(vac)
 
 def main():
     parser = argparse.ArgumentParser(description='Программа для работы с вакансиями')
@@ -54,6 +71,7 @@ def main():
     parser.add_argument('--getvacancies', action='store_true', help='Получить вакансии')
     parser.add_argument('--getstatistic', action='store_true', help='Получить статистику')
     parser.add_argument('--getreport', action='store_true', help='Сгенерировать отчет')
+    parser.add_argument('--getbest',type=lambda s: s.split(','), help='Узнать совместимость вакансий')
     
     
     args = parser.parse_args()
@@ -69,7 +87,9 @@ def main():
     if args.getreport:
         generate_html_report()
     
-    # Если никаких аргументов не передано
+    if args.getbest:
+        get_best_vacancy(args.getbest)
+
     if not any(vars(args).values()):
         parser.print_help()
 

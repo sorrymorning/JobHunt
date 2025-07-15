@@ -6,7 +6,11 @@
     "company": "Яндекс",
     "location": "Москва • Санкт-Петербург • Екатеринбург • Неполный рабочий день",
     "url": "https://career.habr.com/vacancies/1000151934",
-    "description": ""
+    "description": "",
+    "skills": [
+      "Python"
+    ],
+    "compatibility": 0.5
   },
   {
     "id": "1000152686",
@@ -15,7 +19,11 @@
     "company": "Яндекс",
     "location": "Ташкент • Неполный рабочий день",
     "url": "https://career.habr.com/vacancies/1000152686",
-    "description": ""
+    "description": "",
+    "skills": [
+      "Python"
+    ],
+    "compatibility": 0.5
   },
   {
     "id": "1000152616",
@@ -24,7 +32,9 @@
     "company": "Яндекс",
     "location": "Ташкент • Неполный рабочий день",
     "url": "https://career.habr.com/vacancies/1000152616",
-    "description": ""
+    "description": "",
+    "skills": [],
+    "compatibility": 0.0
   },
   {
     "id": "1000152614",
@@ -33,7 +43,11 @@
     "company": "Яндекс",
     "location": "Ташкент • Неполный рабочий день",
     "url": "https://career.habr.com/vacancies/1000152614",
-    "description": ""
+    "description": "",
+    "skills": [
+      "Python"
+    ],
+    "compatibility": 0.5
   },
   {
     "id": "1000154012",
@@ -42,7 +56,59 @@
     "company": "Лаборатория Касперского",
     "location": "Можно удаленно",
     "url": "https://career.habr.com/vacancies/1000154012",
-    "description": ""
+    "description": "",
+    "skills": [
+      "Python",
+      "Docker",
+      "Docker",
+      "Linux"
+    ],
+    "compatibility": 0.25
+  },
+  {
+    "id": "1000145006",
+    "site": "habr",
+    "title": "Prompt Engineer",
+    "company": "PyShop",
+    "location": "Неполный рабочий день • Можно удаленно",
+    "url": "https://career.habr.com/vacancies/1000145006",
+    "description": "",
+    "skills": [
+      "Python",
+      "transformers",
+      "Linux",
+      "transformers",
+      "spaCy",
+      "NLTK",
+      "JSON"
+    ],
+    "compatibility": 0.14285714285714285
+  },
+  {
+    "id": "122781871",
+    "site": "hh",
+    "title": "Backend-разработчик Python",
+    "company": "Т1",
+    "location": "Казань",
+    "url": "https://hh.ru/vacancy/122781871",
+    "description": "Разработка и оптимизация серверной логики внутреннего портала. Разработка и поддержка микросервисов, интегрирация с системами. Обеспечение масштабируемости и отказоустойчивости сервисов. ",
+    "skills": [
+      "Python",
+      "asyncio",
+      "Django",
+      "FastAPI",
+      "Docker",
+      "CI/CD",
+      "SQL",
+      "NoSQL",
+      "Docker",
+      "Kubernetes",
+      "REST",
+      "REST API",
+      "FastAPI",
+      "Code Review"
+    ],
+    "compatibility": 0.07692307692307693
   },
   {
     "id": "122593565",
@@ -51,25 +117,38 @@
     "company": "НДК",
     "location": "Казань",
     "url": "https://hh.ru/vacancy/122593565",
-    "description": "Разработка и выполнение тест-кейсов для автоматического и ручного тестирования программных продуктов. - Анализ результатов тестирования и документирование найденных дефектов. - "
+    "description": "Разработка и выполнение тест-кейсов для автоматического и ручного тестирования программных продуктов. - Анализ результатов тестирования и документирование найденных дефектов. - ",
+    "skills": [
+      "Python",
+      "Postman",
+      "Postman"
+    ],
+    "compatibility": 0.3333333333333333
   },
   {
-    "id": "122448160",
+    "id": "122756910",
     "site": "hh",
-    "title": "Аналитик данных",
-    "company": "Нэфис Косметикс",
+    "title": "Python Developer Senior (AI Agents)",
+    "company": "Открытые решения",
     "location": "Казань",
-    "url": "https://hh.ru/vacancy/122448160",
-    "description": "Выполнять задания руководителя, связанные со сбором, анализом и обобщением информации. Выявлять тенденции и закономерности. Подготавливать аналитические справки, отчеты, презентации."
-  },
-  {
-    "id": "121858619",
-    "site": "hh",
-    "title": "Python Backend Developer",
-    "company": "EasyDev",
-    "location": "Казань",
-    "url": "https://hh.ru/vacancy/121858619",
-    "description": "Веб-продукты: лендинги, корпоративные сайты, маркетплейсы. Системы управления: CRM/ERP, кастомные админки, BI-панели. Интеграции и микросервисы: REST / GraphQL API..."
+    "url": "https://hh.ru/vacancy/122756910",
+    "description": "...работая на стыке <highlighttext>Python</highlighttext>-разработки, машинного обучения (ML) и Large Language Models (LLM). - Разработка и оптимизация <highlighttext>Python</highlighttext>-кода для AI...",
+    "skills": [
+      "Python",
+      "Flask",
+      "Django",
+      "FastAPI",
+      "Docker",
+      "SQL",
+      "PostgreSQL",
+      "MySQL",
+      "NoSQL",
+      "Docker",
+      "Kubernetes",
+      "FastAPI",
+      "Code Review"
+    ],
+    "compatibility": 0.08333333333333333
   },
   {
     "id": "122749058",
@@ -78,15 +157,12 @@
     "company": "Совкомбанк",
     "location": "Казань",
     "url": "https://hh.ru/vacancy/122749058",
-    "description": "Генерация и проверка гипотез путем моделирования (MS SQL, <highlighttext>Python</highlighttext>). Работа с базой данных: написание запросов, построение витрин, написание процедур. "
-  },
-  {
-    "id": "122604922",
-    "site": "hh",
-    "title": "Инженер данных (Стажер)",
-    "company": "Центр финансовых технологий",
-    "location": "Казань",
-    "url": "https://hh.ru/vacancy/122604922",
-    "description": "За время участия в проекте ты. Изучишь ключевые технологии и инструменты для обработки и хранения данных, такие как Spark, Flink..."
+    "description": "Генерация и проверка гипотез путем моделирования (MS SQL, <highlighttext>Python</highlighttext>). Работа с базой данных: написание запросов, построение витрин, написание процедур. ",
+    "skills": [
+      "Python",
+      "SQL",
+      "Machine Learning"
+    ],
+    "compatibility": 0.25
   }
 ]

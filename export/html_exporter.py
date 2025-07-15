@@ -13,10 +13,8 @@ def generate_html_report():
     template = env.get_template("vacancies.html")
     vacancies = load_vacancies()
     statistic = load_statictic()
+    vacancies.sort(reverse=True, key = lambda x : x.compatibility)
     html_content = template.render(vacancies=vacancies,technologies=statistic)
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(html_content)
     print(f"✅ Отчёт сохранён в {OUTPUT_PATH.absolute()}")
-
-
-

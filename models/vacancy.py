@@ -2,7 +2,7 @@ from dataclasses import asdict
 
 
 class Vacancy:
-    def __init__(self, id,site,title,company,location,url,description):
+    def __init__(self, id,site,title,company,location,url,description,skills,compatibility):
         self.id = id
         self.site = site
         self.title = title
@@ -10,6 +10,8 @@ class Vacancy:
         self.location = location
         self.url = url
         self.description = description
+        self.skills = skills
+        self.compatibility = compatibility
     
     def to_dict(self):
         """Преобразует объект Vacancy в словарь"""
@@ -20,7 +22,9 @@ class Vacancy:
             'company': self.company,
             'location': self.location,
             'url': self.url,
-            'description': self.description
+            'description': self.description,
+            'skills': self.skills,
+            'compatibility': self.compatibility
         }
 
     @classmethod
@@ -33,6 +37,8 @@ class Vacancy:
             company=data.get('company'),
             location=data.get('location'),
             url=data.get('url'),
-            description=data.get('description')
+            description=data.get('description'),
+            skills=data.get('skills'),
+            compatibility=data.get('compatibility')
         )
     

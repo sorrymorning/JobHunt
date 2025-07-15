@@ -48,7 +48,9 @@ def get_vacancies_hh(keyword:str,vacans):
                 company=vacancy.get('employer', {}).get('name'),
                 location = vacancy.get('area').get('name'),
                 url = "https://hh.ru/vacancy/" + vacancy.get('id'),
-                description = vacancy.get('snippet').get('responsibility')
+                description = vacancy.get('snippet').get('responsibility'),
+                skills = [],
+                compatibility = 0
             ))
     else:
         print(f"Ошибка запроса: {response.status_code}")
