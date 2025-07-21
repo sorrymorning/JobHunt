@@ -1,7 +1,8 @@
 from models.vacancy import Vacancy
-from sources.hh_parser import get_vacancies_hh,read_vacancies_hh
+from sources.hh_parser import get_vacancies_hh
 from sources.config import TECH_KEYWORDS
-from sources.habr_parser import get_vacancies_habr, get_raw_vacancies,extract_skills
+from sources.habr_parser import get_vacancies_habr,extract_skills
+from sources.fetch_vacancy import fetch_vacancy
 from utils.io import save_vacancies,load_vacancies
 from export.html_exporter import generate_html_report
 from collections import Counter
@@ -9,42 +10,29 @@ from pathlib import Path
 import argparse
 import json
 
-def clearTempFiles():
-    folder = Path("sources/tempFiles")
-    for file in folder.iterdir():
-        if file.is_file():
-            file.unlink()  
-            print(f"Удалён файл: {file.name}")
 
-def countSkills():
-    vac = load_vacancies()
-    for vacancy in [x for x in vac if x.site=="hh"]:
-        read_vacancies_hh(vacancy)
+from data.database import SessionLocal,engine
+from data.database import Base
+from utils.crud import get_vacancies,update_vacancies
 
-    for vacancy in [x for x in vac if x.site=="habr"]:
-        get_raw_vacancies(vacancy)
 
-    folder_path = Path("sources/tempFiles")
+
+def count_skills(session):
+    vac = get_vacancies(session)
+
     all_skills = []
-    if folder_path.exists() and folder_path.is_dir():
-        for vacancy in vac:
-            file_path = folder_path / (vacancy.id + vacancy.site + ".txt") 
-
-            with open(file_path, "r", encoding="utf-8") as f:
-                skills = extract_skills("".join(f.readlines()),TECH_KEYWORDS)
-                vacancy.skills = skills
-                all_skills.extend(skills)
-    else:
-        print("Папка tempFiles не существует!")
+    for vacancy in vac: 
+        f = fetch_vacancy(vacancy)
+        skills = extract_skills(f,TECH_KEYWORDS)
+        update_vacancies(session,vacancy.url,','.join(skills))
+        all_skills.extend(skills)
 
     counter = Counter(all_skills)
     dict = {}
     for skill,count in counter.most_common(20):
         print(f"{skill}: {count}")
         dict[skill] = count
-    
-    save_vacancies(vac)
-    clearTempFiles()
+
     with open("data/statistic.json","w") as f:
         json.dump(dict,f,ensure_ascii=False, indent=2)
 
@@ -56,8 +44,7 @@ def jaccard_similarity(set1, set2):
 
 
 def get_best_vacancy(user_skills):
-    vac = load_vacancies()
-
+    vac = get_vacancies(session)
 
     for vacancy in vac:
         score = jaccard_similarity(user_skills,vacancy.skills)
@@ -68,6 +55,12 @@ def get_best_vacancy(user_skills):
 def main():
     parser = argparse.ArgumentParser(description='Программа для работы с вакансиями')
     
+    Base.metadata.create_all(bind=engine)
+
+    session = SessionLocal()
+    
+
+
     parser.add_argument('--getvacancies', action='store_true', help='Получить вакансии')
     parser.add_argument('--getstatistic', action='store_true', help='Получить статистику')
     parser.add_argument('--getreport', action='store_true', help='Сгенерировать отчет')
@@ -75,14 +68,12 @@ def main():
     
     
     args = parser.parse_args()
-    vac = []
     if args.getvacancies:
-        get_vacancies_habr("python",vac)
-        get_vacancies_hh("python",vac)
-        save_vacancies(vac[:10])
+        get_vacancies_habr("python",session)
+        get_vacancies_hh("python",session)
 
     if args.getstatistic:
-        countSkills()    
+        count_skills(session)    
     
     if args.getreport:
         generate_html_report()
