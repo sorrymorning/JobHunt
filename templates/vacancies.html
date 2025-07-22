@@ -69,7 +69,7 @@
       {% endfor %}
     </div>
   </div>
-  {% for v in vacancies %}
+  {% for v,c in vacancies %}
     <div class="vacancy">
       <div class="title"><a href="{{ v.url }}">{{ v.title }}</a></div>
       <div class="company">{{ v.company }}</div>

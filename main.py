@@ -1,19 +1,15 @@
-from models.vacancy import Vacancy
 from sources.hh_parser import get_vacancies_hh
 from sources.config import TECH_KEYWORDS
 from sources.habr_parser import get_vacancies_habr,extract_skills
 from sources.fetch_vacancy import fetch_vacancy
-from utils.io import save_vacancies,load_vacancies
 from export.html_exporter import generate_html_report
 from collections import Counter
-from pathlib import Path
 import argparse
 import json
-
-
 from data.database import SessionLocal,engine
 from data.database import Base
-from utils.crud import get_vacancies,update_vacancies
+from utils.crud import get_vacancies,update_vacancies,add_compability,\
+                        get_compability_by_id,update_compability
 
 
 
@@ -43,14 +39,16 @@ def jaccard_similarity(set1, set2):
     return intersection / union if union else 0
 
 
-def get_best_vacancy(user_skills):
+def get_best_vacancy(session,user_skills):
     vac = get_vacancies(session)
 
     for vacancy in vac:
-        score = jaccard_similarity(user_skills,vacancy.skills)
+        score = jaccard_similarity(user_skills,vacancy.technologies.split(','))
         print(f"{vacancy.title}: совпадение {score:.2f}")
-        vacancy.compatibility = score
-    save_vacancies(vac)
+        if get_compability_by_id(session,vacancy.id):
+            update_compability(session,vacancy.id,score)
+        else:
+            add_compability(session,1,vacancy.id,score)
 
 def main():
     parser = argparse.ArgumentParser(description='Программа для работы с вакансиями')
@@ -76,10 +74,10 @@ def main():
         count_skills(session)    
     
     if args.getreport:
-        generate_html_report()
+        generate_html_report(session)
     
     if args.getbest:
-        get_best_vacancy(args.getbest)
+        get_best_vacancy(session,args.getbest)
 
     if not any(vars(args).values()):
         parser.print_help()
