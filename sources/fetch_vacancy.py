@@ -14,6 +14,7 @@ def fetch_vacancy(vacancy):
             print(f"Ошибка запроса: {response.status_code}")
 
     elif url.find('hh.ru') != -1:
+        url = "https://api.hh.ru/vacancies/" + url[url.rfind('/')+1:]
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()

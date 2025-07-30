@@ -41,6 +41,10 @@ TECH_KEYWORDS = [
     "MVC", "MVVM", "Clean Architecture", "Hexagonal Architecture", "Microservices", "Monolith", "Event-driven", "Pub/Sub",
 
     # 🔷 Soft Skills и методологии
-    "Agile", "Scrum", "Kanban", "Code Review", "Teamwork", "English", "Communication", "Problem Solving", "Self-learnings"
+    "Agile", "Scrum", "Kanban", "Code Review", "Teamwork", "English", "Communication", "Problem Solving", "Self-learnings",
+
+    "Ubuntu","Apache"
+
+
 ]
 

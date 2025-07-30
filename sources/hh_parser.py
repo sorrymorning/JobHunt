@@ -24,7 +24,7 @@ def get_vacancies_hh(keyword:str,session):
                 title=vacancy.get('name'),
                 company=vacancy.get('employer', {}).get('name'),
                 # location = vacancy.get('area').get('name'),
-                url = "https://api.hh.ru/vacancies/" + vacancy.get('id'),
+                url = "https://kazan.hh.ru/vacancy/" + vacancy.get('id'),
                 description = vacancy.get('snippet').get('responsibility'),
                 technologies = ''
             )
