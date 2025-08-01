@@ -10,8 +10,9 @@ from data.database import SessionLocal,engine
 from data.database import Base
 from utils.crud import get_vacancies,update_vacancies,add_compability,\
                         get_compability_by_id,update_compability
+from utils.io import export_data_to_csv
 
-
+from utils.tfidf import train_model,get_matching_vacancies
 
 def count_skills(session):
     vac = get_vacancies(session)
@@ -20,7 +21,7 @@ def count_skills(session):
     for vacancy in vac: 
         f = fetch_vacancy(vacancy)
         skills = extract_skills(f,TECH_KEYWORDS)
-        update_vacancies(session,vacancy.url,','.join(skills))
+        update_vacancies(session,vacancy.url,','.join(skills),f)
         all_skills.extend(skills)
 
     counter = Counter(all_skills)
@@ -63,6 +64,7 @@ def main():
     parser.add_argument('--getstatistic', action='store_true', help='Получить статистику')
     parser.add_argument('--getreport', action='store_true', help='Сгенерировать отчет')
     parser.add_argument('--getbest',type=lambda s: s.split(','), help='Узнать совместимость вакансий')
+    parser.add_argument('--getcsv',action='store_true', help='Экспорт в CSV')
     
     
     args = parser.parse_args()
@@ -77,10 +79,15 @@ def main():
         generate_html_report(session)
     
     if args.getbest:
-        get_best_vacancy(session,args.getbest)
+        # get_best_vacancy(session,args.getbest)
+        model, vectorizer, df = train_model(session)
+        get_matching_vacancies(model, vectorizer, df, args.getbest)
 
     if not any(vars(args).values()):
         parser.print_help()
+
+    if args.getcsv:
+        export_data_to_csv(session)
 
 
 

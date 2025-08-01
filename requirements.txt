@@ -1,4 +1,8 @@
-request
+requests
 jinja2
 lxml
-bs4
+beautifulsoup4
+sqlalchemy
+pandas
+scikit-learn
+matplotlib

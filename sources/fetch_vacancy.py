@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 def fetch_vacancy(vacancy):
     url = vacancy.url
@@ -20,6 +21,7 @@ def fetch_vacancy(vacancy):
             data = response.json()
             skills = [skill['name'] for skill in data.get('key_skills', [])]
             description = data.get('description')
+            description = re.sub(r"<[^>]+>", "", description)
             description += " " + " ".join(skills)
         else:
             print(f"Ошибка запроса hh: {response.status_code}")
