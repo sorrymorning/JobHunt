@@ -1,7 +1,8 @@
 from models.vacancy import Vacancy
 from models.vacancy import Compability
 from sqlalchemy.exc import IntegrityError
-
+import pandas as pd
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def add_vacancy(session,title,company,url,description,technologies):
@@ -25,8 +26,20 @@ def add_vacancy(session,title,company,url,description,technologies):
 def get_vacancies(session):
     return session.query(Vacancy).all()
 
+def get_vacancies_df(session):
+    try:
+        vacancies = session.query(Vacancy).all()
+        if not vacancies:
+            print("В базе данных нет вакансий.")
+            return pd.DataFrame(columns=["title", "text"]) 
+        data = [{"title": v.title or "", "text": v.description or "", "url":v.url or ""} for v in vacancies]
+        return pd.DataFrame(data)
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+        return pd.DataFrame(columns=["title", "text","url"])
 
-def update_vacancies(session,url,new_skills = None):
+
+def update_vacancies(session,url,new_skills = None,new_description = None):
     vacancy = session.query(Vacancy).filter_by(url=url).first()
 
     if not vacancy:
@@ -35,7 +48,8 @@ def update_vacancies(session,url,new_skills = None):
 
     if new_skills is not None:
         vacancy.technologies = new_skills
-    
+    if new_description is not None:
+        vacancy.description = new_description
 
     session.commit()
     print("Вакансия обновлена")
